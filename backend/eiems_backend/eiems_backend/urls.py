@@ -14,13 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
-from eiems_backend.eiems_backend.login.views.login_view import login_view, signup_view
+from xml.etree.ElementInclude import include
 
+from django.contrib import admin
+from django.urls import path, include
+
+
+
+app_name = 'eiems_backend'
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('signup/', login_view),
-    path('signin/', signup_view),
+    path('login/', include('login.urls')),  # Point to login app's URLs
+
 ]
 

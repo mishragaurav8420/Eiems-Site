@@ -1,15 +1,15 @@
 from http import HTTPStatus
 
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import status
+from rest_framework.authtoken.models import Token
+
 
 class signUpApi:
 
-    def user_signin(request):
+    def user_signin_service(request):
         username = request.data.get('username')
         password = request.data.get('password')
 
@@ -25,16 +25,16 @@ class signUpApi:
         else:
             return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
 
-    def user_signup(request):
+    def user_signup_service(request):
         username = request.data.get('username')
         password = request.data.get('password')
         email = request.data.get('email')
         if not username or not password or not email:
-            return Response({"error":"Please provide user name ,email and password",status=status.HTTP_400_BAD_REQUEST})
-        if User.object.filter(username=username).exist():
-            return Response({'error':'User name already exist',status=status.HTTP_400_BAD_REQUEST})
-        if User.object.filter(email = email).exist():
-            return Response({'error':"Email already exist",status=status.HTTP_400_BAD_REQUEST})
+            return Response({"error":"Please provide user name ,email and password"},status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(username=username).exists():
+            return Response({'error':'User name already exist'},status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email = email).exists():
+            return Response({'error':"Email already exist"},status=status.HTTP_400_BAD_REQUEST)
         user = User.objects.create_user(username=username, password=password, email=email)
         token, created = Token.objects.get_or_create(user=user)
         return Response({"message": "User created successfully", "token": token.key},
