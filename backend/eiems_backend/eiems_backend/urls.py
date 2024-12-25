@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from eiems_backend.eiems_backend.login.views.login_view import login_view, signup_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('signup/', login_view),
+    path('signin/', signup_view),
 ]
+
