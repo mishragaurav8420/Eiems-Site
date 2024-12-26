@@ -8,7 +8,6 @@ from rest_framework.authtoken.models import Token
 
 
 class signUpApi:
-
     def user_signin_service(request):
         username = request.data.get('username')
         password = request.data.get('password')
